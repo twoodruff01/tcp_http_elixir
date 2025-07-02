@@ -1,12 +1,14 @@
-version: '3'
-
 services:
   postgresql:
-    container_name: backend-toy-postgres
-    image: postgres
+    container_name: elixir-postgres-tcp
+    image: postgres:17-bookworm
     ports:
-      - "5444:5432"
+      - "127.0.0.1:5555:5432"
     environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=postgres
+      - POSTGRES_USER=${POSTGRES_USER:?err}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:?err}
+      - POSTGRES_DB=elixirdb
+    volumes:
+      - elixir-volume-postgres:/var/lib/postgresql/data
+volumes:
+  elixir-volume-postgres:

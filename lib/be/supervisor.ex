@@ -8,9 +8,9 @@ defmodule BE.Supervisor do
   @impl true
   def init(:ok) do
     children = [
-      {BE.Connector, 4000},
-      {DynamicSupervisor, name: BE.SessionSupervisor},
-      {BE.Api, name: BE.Api}
+      {BE.Listener, 4000},
+      BE.DbConnectionPool,
+      {DynamicSupervisor, name: BE.SessionSupervisor}
     ]
 
     Supervisor.init(children, strategy: :one_for_one)

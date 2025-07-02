@@ -5,7 +5,7 @@ defmodule BE.MixProject do
     [
       app: :backend,
       version: "0.1.0",
-      elixir: "~> 1.16",
+      elixir: "~> 1.18",
       start_permanent: Mix.env() == :prod,
       deps: deps()
     ]
@@ -24,8 +24,8 @@ defmodule BE.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:credo, "~> 1.7.1", only: [:dev, :test], runtime: false},
-      {:postgrex, "0.17.4"}
+      {:credo, "~> 1.7.12", only: [:dev, :test], runtime: false},
+      {:postgrex, "~> 0.20.0"}
     ]
   end
 end

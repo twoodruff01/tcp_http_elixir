@@ -1,6 +1,6 @@
-defmodule BE.Connector do
+defmodule BE.Listener do
   @moduledoc """
-  `Connector` interacts with new clients once, when they first contact the system.
+  `Listener` interacts with new clients once, when they first contact the system.
   It passes the socket connection for each new connection to the `SessionSupervisor`.
   """
   use Task
@@ -23,10 +23,10 @@ defmodule BE.Connector do
   end
 
   defp listen(socket) do
-    {:ok, client} = :gen_tcp.accept(socket)
-    {:ok, pid} = DynamicSupervisor.start_child(BE.SessionSupervisor, {BE.Connection, client})
-    :ok = :gen_tcp.controlling_process(client, pid)
-    BE.Connection.begin(pid)
+    {:ok, client_sock} = :gen_tcp.accept(socket)
+    {:ok, pid} = DynamicSupervisor.start_child(BE.SessionSupervisor, {BE.Session, client_sock})
+    :ok = :gen_tcp.controlling_process(client_sock, pid)
+    BE.Session.begin(pid)
     listen(socket)
   end
 end
